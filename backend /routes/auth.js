@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/User');
 const router = express.Router();
 
-// signup/register
+// Register
 router.post('/register', async (req, res) => {
   const { email, password } = req.body;
   try {
@@ -19,7 +19,6 @@ router.post('/register', async (req, res) => {
     await user.save();
 
     const payload = { user: { id: user.id } };
-
     jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
       if (err) throw err;
       res.json({ token });
@@ -34,7 +33,6 @@ router.post('/register', async (req, res) => {
 // Login 
 router.post('/login', async (req, res) => {
   const { email, password } = req.body;
-
   try {
     const user = await User.findOne({ email });
     if (!user) {
@@ -47,7 +45,6 @@ router.post('/login', async (req, res) => {
     }
 
     const payload = { user: { id: user.id } };
-
     const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: '1h' }, (err, token) => {
       if (err) throw err;
       res.json({ token });

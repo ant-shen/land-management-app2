@@ -5,15 +5,15 @@
     <div v-if="owners.length > 0">
       <h3>Owners</h3>
       <ul>
-        <li v-for="owner in owners" :key="owner._id">
-          <router-link :to="'/owner/' + owner._id">{{ owner.name }}</router-link>
+        <li v-for="owner in owners" :key="owner._id">{{ owner.ownerName }}
+          <!-- This line is commented out <router-link :to="'/owner/' + owner._id">{{ owner.name }}</router-link>-->
         </li>
       </ul>
     </div>
     <form @submit.prevent="createOwner">
       <h3>Create New Owner</h3>
       <div>
-        <label for="name">Owner Name:</label>
+        <label for="ownerName">Owner Name:</label>
         <input type="text" v-model="ownerName" required />
       </div>
       <div>
@@ -59,7 +59,7 @@ export default {
   },
   async created() {
     try {
-      const response = await axios.get('http://localhost:5000/api/owners', {
+      const response = await axios.get('http://localhost:5001/api/owners', {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
@@ -74,9 +74,9 @@ export default {
     async createOwner() {
       try {
         const response = await axios.post(
-          'http://localhost:5000/api/owners',
+          'http://localhost:5001/api/owners',
           {
-            name: this.ownerName,
+            ownerName: this.ownerName,
             entityType: this.entityType,
             ownerType: this.ownerType,
             address: this.address,

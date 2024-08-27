@@ -8,13 +8,15 @@ connectDB();
 
 const app = express();
 
+
 app.use(cors({
-    //origin: 'http://localhost:8080', 
-    origin: '*',
+    origin: 'http://localhost:8080', 
+    //origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
-    allowedHeaders: ['Content-Type'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true 
   }));
+  
 app.use(express.json());
 
 // Routing

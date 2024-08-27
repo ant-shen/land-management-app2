@@ -69,14 +69,14 @@ export default {
   async created() {
     try {
       const ownerId = this.$route.params.id;
-      const ownerResponse = await axios.get(`http://localhost:5000/api/owners/${ownerId}`, {
+      const ownerResponse = await axios.get(`http://localhost:5001/api/owners/${ownerId}`, {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
       });
       this.owner = ownerResponse.data;
 
-      const holdingsResponse = await axios.get(`http://localhost:5000/api/landholdings?owner=${ownerId}`, {
+      const holdingsResponse = await axios.get(`http://localhost:5001/api/landholdings?owner=${ownerId}`, {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
@@ -92,7 +92,7 @@ export default {
       try {
         const ownerId = this.$route.params.id;
         const response = await axios.post(
-          'http://localhost:5000/api/landholdings',
+          'http://localhost:5001/api/landholdings',
           {
             name: this.owner.name,
             owner: ownerId,
