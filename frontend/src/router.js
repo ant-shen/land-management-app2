@@ -4,6 +4,7 @@ import Login from './views/Login.vue';
 import SignUp from './views/SignUp.vue';
 import Dashboard from './views/Dashboard.vue';
 import OwnerDetails from './views/OwnerDetails.vue';
+import LandHoldingDetails from './views/LandHoldingDetails';
 
 Vue.use(Router);
 
@@ -14,5 +15,6 @@ export default new Router({
     { path: '/signup', component: SignUp },
     { path: '/dashboard', component: Dashboard },
     { path: '/owner/:id', component: OwnerDetails },
+    { path: '/landholding/:id', component: LandHoldingDetails}
   ],
 });

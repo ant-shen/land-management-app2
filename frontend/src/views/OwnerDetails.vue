@@ -1,13 +1,21 @@
 <template>
   <div class="owner-details">
-    <h2>{{ owner.name }}</h2>
+    <h2>{{ owner.ownerName }}</h2>
     <p>Address: {{ owner.address }}</p>
+    
+    <!-- Land Holdings List -->
     <h3>Land Holdings</h3>
     <ul>
       <li v-for="holding in landHoldings" :key="holding._id">
-        {{ holding.name }} ({{ holding.sectionName }})
+        <router-link :to="'/landholding/' + holding._id">
+          {{ holding.name }} - {{ holding.legalEntity }}
+        </router-link>
+        <!-- Delete Button -->
+        <button @click="deleteLandHolding(holding._id)">Delete</button>
       </li>
     </ul>
+
+    <!-- Create Land Holding Form -->
     <form @submit.prevent="createLandHolding">
       <h3>Create New Land Holding</h3>
       <div>
@@ -40,7 +48,12 @@
       </div>
       <div>
         <label for="titleSource">Title Source:</label>
-        <input type="text" v-model="titleSource" required />
+        <select v-model="titleSource" required>
+          <option value="Class A">Class A</option>
+          <option value="Class B">Class B</option>
+          <option value="Class C">Class C</option>
+          <option value="Class D">Class D</option>
+        </select>
       </div>
       <button type="submit">Create Land Holding</button>
     </form>
@@ -54,8 +67,8 @@ export default {
   name: 'OwnerDetails',
   data() {
     return {
-      owner: {},
-      landHoldings: [],
+      owner: {}, // Initialize as empty object
+      landHoldings: [], // Initialize as empty array
       legalEntity: '',
       netMineralAcres: '',
       mineralOwnerRoyalty: '',
@@ -69,6 +82,8 @@ export default {
   async created() {
     try {
       const ownerId = this.$route.params.id;
+      
+      // Fetch the owner details
       const ownerResponse = await axios.get(`http://localhost:5001/api/owners/${ownerId}`, {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
@@ -76,6 +91,7 @@ export default {
       });
       this.owner = ownerResponse.data;
 
+      // Fetch the land holdings for this owner
       const holdingsResponse = await axios.get(`http://localhost:5001/api/landholdings?owner=${ownerId}`, {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
@@ -94,7 +110,7 @@ export default {
         const response = await axios.post(
           'http://localhost:5001/api/landholdings',
           {
-            name: this.owner.name,
+            name: `${this.sectionName}-${this.legalEntity}`, // Use a combination for name
             owner: ownerId,
             legalEntity: this.legalEntity,
             netMineralAcres: this.netMineralAcres,
@@ -112,6 +128,7 @@ export default {
           }
         );
         this.landHoldings.push(response.data);
+        // Clear form fields after submission
         this.legalEntity = '';
         this.netMineralAcres = '';
         this.mineralOwnerRoyalty = '';
@@ -123,6 +140,19 @@ export default {
       } catch (error) {
         console.error('Failed to create land holding:', error);
         alert('Failed to create land holding.');
+      }
+    },
+    async deleteLandHolding(holdingId) {
+      try {
+        await axios.delete(`http://localhost:5001/api/landholdings/${holdingId}`, {
+          headers: {
+            Authorization: `Bearer ${this.$store.state.token}`,
+          },
+        });
+        this.landHoldings = this.landHoldings.filter(holding => holding._id !== holdingId);
+      } catch (error) {
+        console.error('Failed to delete land holding:', error);
+        alert('Failed to delete land holding.');
       }
     },
   },
