@@ -9,7 +9,8 @@ import LandHoldingDetails from './views/LandHoldingDetails';
 Vue.use(Router);
 
 export default new Router({
-  mode: 'history',
+  //mode: 'history',
+  mode: 'hash',
   routes: [
     { path: '/', component: Login },
     { path: '/signup', component: SignUp },
