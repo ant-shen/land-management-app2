@@ -8,7 +8,7 @@ connectDB();
 
 const app = express();
 
-
+/*
 app.use(cors({
     origin: 'http://localhost:8080', 
     //origin: '*',
@@ -16,6 +16,15 @@ app.use(cors({
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true 
   }));
+  */
+
+const corsOptions = {
+    origin: 'https://ant-shen.github.io',
+    optionsSuccessStatus: 200,
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true 
+}; 
   
 app.use(express.json());
 
