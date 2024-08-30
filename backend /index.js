@@ -7,10 +7,12 @@ dotenv.config();
 connectDB();
 
 const app = express();
-
+//file upload
+const fileRoutes = require('./routes/fileRoutes'); 
+//app.use('/api', fileRoutes);
 
 app.use(cors({
-    origin: 'http://localhost:8080', 
+    origin: 'https://master--tourmaline-praline-8590d5.netlify.app/', 
     //origin: '*',
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], 
     allowedHeaders: ['Content-Type', 'Authorization'],
@@ -24,6 +26,7 @@ app.use('/api/auth', require('./routes/auth'));
 app.use('/api/login', require('./routes/loginRoute'));
 app.use('/api/owners', require('./routes/owners'));
 app.use('/api/landholdings', require('./routes/landHoldings'));
+app.use('/api/upload', require('./routes/fileRoutes'));
 
 const PORT = process.env.PORT || 5001;
 

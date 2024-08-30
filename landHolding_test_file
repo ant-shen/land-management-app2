@@ -1,0 +1,12 @@
+{
+  "name": "Section 5 - John Doe",
+  "owner": "owner_id_placeholder",
+  "legalEntity": "John Doe",
+  "netMineralAcres": 150,
+  "mineralOwnerRoyalty": 12.5,
+  "sectionName": "Section 5",
+  "section": "5",
+  "township": "15N",
+  "range": "20E",
+  "titleSource": "Class A"
+}
