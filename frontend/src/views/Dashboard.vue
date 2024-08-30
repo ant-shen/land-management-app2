@@ -70,7 +70,7 @@ export default {
   },
   async created() {
     try {
-      const response = await axios.get('http://localhost:5001/api/owners', {
+      const response = await axios.get('${process.env.VUE_APP_API_URL}/api/owners', {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
@@ -87,7 +87,7 @@ export default {
         if (this.isEditing) {
           // Update existing owner
           const response = await axios.put(
-            `http://localhost:5001/api/owners/${this.ownerId}`,
+            `${process.env.VUE_APP_API_URL}/api/owners/${this.ownerId}`,
             {
               ownerName: this.ownerName,
               entityType: this.entityType,
@@ -106,7 +106,7 @@ export default {
         } else {
           // Create new owner
           const response = await axios.post(
-            'http://localhost:5001/api/owners',
+            '${process.env.VUE_APP_API_URL}/api/owners',
             {
               ownerName: this.ownerName,
               entityType: this.entityType,
@@ -139,7 +139,7 @@ export default {
     },
     async deleteOwner(ownerId) {
       try {
-        await axios.delete(`http://localhost:5001/api/owners/${ownerId}`, {
+        await axios.delete(`${process.env.VUE_APP_API_URL}/api/owners/${ownerId}`, {
           headers: {
             Authorization: `Bearer ${this.$store.state.token}`,
           },
