@@ -84,7 +84,7 @@ export default {
       const ownerId = this.$route.params.id;
       
       // Fetch the owner details
-      const ownerResponse = await axios.get(`http://localhost:5001/api/owners/${ownerId}`, {
+      const ownerResponse = await axios.get(`${process.env.VUE_APP_API_URL}/api/owners/${ownerId}`, {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
@@ -92,7 +92,7 @@ export default {
       this.owner = ownerResponse.data;
 
       // Fetch the land holdings for this owner
-      const holdingsResponse = await axios.get(`http://localhost:5001/api/landholdings?owner=${ownerId}`, {
+      const holdingsResponse = await axios.get(`${process.env.VUE_APP_API_URL}/api/landholdings?owner=${ownerId}`, {
         headers: {
           Authorization: `Bearer ${this.$store.state.token}`,
         },
@@ -108,7 +108,7 @@ export default {
       try {
         const ownerId = this.$route.params.id;
         const response = await axios.post(
-          'http://localhost:5001/api/landholdings',
+          '${process.env.VUE_APP_API_URL}/api/landholdings',
           {
             name: `${this.sectionName}-${this.legalEntity}`, // Use a combination for name
             owner: ownerId,
@@ -144,7 +144,7 @@ export default {
     },
     async deleteLandHolding(holdingId) {
       try {
-        await axios.delete(`http://localhost:5001/api/landholdings/${holdingId}`, {
+        await axios.delete(`${process.env.VUE_APP_API_URL}/api/landholdings/${holdingId}`, {
           headers: {
             Authorization: `Bearer ${this.$store.state.token}`,
           },
