@@ -1,4 +1,10 @@
 module.exports = {
+  //for production
+  publicPath: process.env.NODE_ENV === 'production'
+    ? '/land-management-app2/' // Path where app is hosted
+    : '/',
+
+    //for local testing
     devServer: {
       proxy: {
         '/api': {
@@ -8,6 +14,7 @@ module.exports = {
         },
       },
     },
+    outputDir: 'docs'
   };
 
 
